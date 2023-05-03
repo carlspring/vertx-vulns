@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'org.carlspring.security'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+def versionVertx = '4.4.1'
+
+dependencies {
+    implementation "io.vertx:vertx-core:$versionVertx"
+    implementation "io.vertx:vertx-web:$versionVertx"
+    implementation "io.vertx:vertx-jdbc-client:$versionVertx"
+    implementation "io.vertx:vertx-sql-client:$versionVertx"
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
