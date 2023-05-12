@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 
-def versionVertx = '4.4.1'
+def versionVertx = '4.4.2'
 
 dependencies {
     implementation "io.vertx:vertx-core:$versionVertx"
