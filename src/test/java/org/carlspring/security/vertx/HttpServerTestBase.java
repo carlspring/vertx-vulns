@@ -1,3 +1,5 @@
+package org.carlspring.security.vertx;
+
 /*
  * Copyright (c) 2023, SAP SE
  *
@@ -10,16 +12,12 @@
  *
  */
 
-package default;
+import java.util.concurrent.TimeUnit;
 
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
-import io.vertx.core.http.HttpClient;
-import io.vertx.core.http.HttpClientOptions;
-import io.vertx.core.http.HttpClientRequest;
-import io.vertx.core.http.HttpMethod;
-import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.*;
 import io.vertx.junit5.Timeout;
 import io.vertx.junit5.VertxExtension;
 import io.vertx.junit5.VertxTestContext;
@@ -27,13 +25,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.concurrent.TimeUnit;
-
 @SuppressWarnings("NewClassNamingConvention")
 @ExtendWith(VertxExtension.class)
-public class HttpServerTestBase {
+public class HttpServerTestBase
+{
 
     protected int port;
+
     protected Vertx vertx;
 
     /**
@@ -44,22 +42,31 @@ public class HttpServerTestBase {
      * @param requestHandler The related requestHandler
      * @return a succeeded {@link Future} if the server is running, otherwise a failed {@link Future}.
      */
-    protected Future<Void> createServer(Handler<HttpServerRequest> requestHandler) {
-        return vertx.createHttpServer().requestHandler(requestHandler).listen(0).
-                onSuccess(server -> port = server.actualPort()).mapEmpty();
+    protected Future<Void> createServer(Handler<HttpServerRequest> requestHandler)
+    {
+        return vertx.createHttpServer()
+                    .requestHandler(requestHandler)
+                    .listen(0)
+                    .onSuccess(server -> port = server.actualPort())
+                    .mapEmpty();
     }
 
     @BeforeEach
-    void setup(Vertx vertx) {
+    void setup(Vertx vertx)
+    {
         this.vertx = vertx;
     }
 
     @AfterEach
     @Timeout(value = 2, timeUnit = TimeUnit.SECONDS)
-    void tearDown(VertxTestContext testContext) {
-        if (vertx != null) {
-            vertx.close().onComplete(testContext.succeedingThenComplete());
-        } else {
+    void tearDown(VertxTestContext testContext)
+    {
+        if (vertx != null)
+        {
+            vertx.close().onComplete(testContext.succeeding());
+        }
+        else
+        {
             testContext.completeNow();
         }
     }
@@ -71,9 +78,11 @@ public class HttpServerTestBase {
      * @param path   The path of the request
      * @return a pre-configured HTTP request.
      */
-    protected Future<HttpClientRequest> createRequest(HttpMethod method, String path) {
-        HttpClient client =
-                vertx.createHttpClient(new HttpClientOptions().setDefaultPort(port).setDefaultHost("localhost"));
+    protected Future<HttpClientRequest> createRequest(HttpMethod method, String path)
+    {
+        HttpClient client = vertx.createHttpClient(new HttpClientOptions().setDefaultPort(port)
+                                                                          .setDefaultHost("localhost"));
         return client.request(method, path);
     }
+
 }

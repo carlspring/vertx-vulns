@@ -1,4 +1,4 @@
-package org.carlspring.security.sql;
+package org.carlspring.security.vertx.sql;
 
 import java.io.IOException;
 

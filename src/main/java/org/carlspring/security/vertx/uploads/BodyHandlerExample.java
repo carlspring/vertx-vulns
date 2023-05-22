@@ -1,4 +1,4 @@
-package org.carlspring.security.uploads;
+package org.carlspring.security.vertx.uploads;
 
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Route;
