@@ -18,6 +18,8 @@ This pull request fixes # <!-- insert the issue number here -->
 
 # Code Review And Pre-Merge Checklist
 
+* [ ] I have implemented an `Insecure` example.
+* [ ] I have implemented a `Secure` example.
 * [ ] My code follows the coding convention of this project.
 * [ ] I have performed a self-review of my own code.
 * [ ] I have commented my code in hard-to-understand areas.
