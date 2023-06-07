@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 
-def versionVertx = '4.4.2'
+def versionVertx = '4.4.3'
 def versionJunit = '5.9.3'
 
 dependencies {
