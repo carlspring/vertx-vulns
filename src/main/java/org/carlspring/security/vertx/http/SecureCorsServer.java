@@ -3,6 +3,8 @@ package org.carlspring.security.vertx.http;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.http.HttpServerOptions;
+import io.vertx.core.net.JksOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.CorsHandler;
 
@@ -18,10 +20,12 @@ public class SecureCorsServer extends AbstractVerticle {
 
         // Configure CORS handling with allowed origins, headers, and methods
         CorsHandler corsHandler = CorsHandler.create()
-                                             // 1) Uses HTTPS
-                                             // 2) Uses a specific origin
+                                             // 1) Use HTTPS
+                                             // 2) Use an explicitly defined origin
                                              .addOrigin("https://example.com")
+                                             // 3) Define allowed headers
                                              .allowedHeader(HttpHeaders.CONTENT_TYPE.toString())
+                                             // 4) Define allowed methods
                                              .allowedMethod(HttpMethod.GET)
                                              .allowedMethod(HttpMethod.POST);
 
@@ -36,8 +40,16 @@ public class SecureCorsServer extends AbstractVerticle {
                           .end("{\"message\":\"Hello, CORS!\"}");
         });
 
+        // Set up SSL
+        HttpServerOptions options = new HttpServerOptions()
+                                            // Set up SSL
+                                            .setSsl(true)
+                                            // Set up keystore
+                                            .setKeyStoreOptions(new JksOptions().setPath("keystore.jks")
+                                                                                .setPassword("keystore_password"));
+
         // Start the server
-        vertx.createHttpServer()
+        vertx.createHttpServer(options)
              .requestHandler(router)
              .listen(8080, ar -> {
                  if (ar.succeeded()) {

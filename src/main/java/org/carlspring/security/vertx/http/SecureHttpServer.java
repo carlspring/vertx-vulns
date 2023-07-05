@@ -14,7 +14,9 @@ public class SecureHttpServer extends AbstractVerticle {
     @Override
     public void start() {
         HttpServerOptions options = new HttpServerOptions()
+                                            // Set up SSL
                                             .setSsl(true)
+                                            // Set up keystore
                                             .setKeyStoreOptions(new JksOptions().setPath("keystore.jks")
                                                                                 .setPassword("keystore_password"));
 
