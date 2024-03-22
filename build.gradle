@@ -11,7 +11,7 @@ repositories {
 }
 
 def versionVertx = '4.4.5'
-def versionJunit = '5.9.3'
+def versionJunit = '5.10.0'
 
 dependencies {
     implementation "io.vertx:vertx-core:$versionVertx"
